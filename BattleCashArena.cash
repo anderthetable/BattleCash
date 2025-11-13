@@ -1,0 +1,46 @@
+pragma cashscript ^0.12.0;
+
+contract BattleCashArena(bytes20 owner, bytes32 prizeId, bytes32 championId1, bytes32 championId2) {
+    function Battle() {
+        bytes32 finalHash = sha256(tx.inputs[2].outpointTransactionHash + tx.inputs[3].outpointTransactionHash);
+        require(tx.inputs[1].tokenCategory.split(32)[0].reverse() == prizeId);
+        int input2Strenght = 10 * ((int(finalHash.split(31)[1] & 0x7f) %10) + 1);
+        console.log(input2Strenght);
+        int input2Life = 10 * ((int(finalHash.slice(30, 31) & 0x7f) %10) + 1);
+        int input3Strenght = 10 * ((int(finalHash.slice(29, 30) & 0x7f) %10) + 1);
+        int input3Life = 10 * ((int(finalHash.slice(28, 29) & 0x7f) %10) + 1);
+        if(tx.inputs[2].tokenCategory.reverse() == championId1 || tx.inputs[2].tokenCategory.reverse() == championId2){
+            input2Strenght = input2Strenght * 2;
+            input2Life = input2Life * 2;
+            if(tx.inputs[2].tokenCategory.reverse() == championId1){
+                input2Strenght = input2Strenght * 3;
+            }
+            if(tx.inputs[2].tokenCategory.reverse() == championId2){
+                input2Life = input2Life * 3;
+            }
+        }
+        if(tx.inputs[3].tokenCategory.reverse() == championId1 || tx.inputs[3].tokenCategory.reverse() == championId2){
+            input3Strenght = input3Strenght * 2;
+            input3Life = input3Life * 2;
+            if(tx.inputs[3].tokenCategory.reverse() == championId1){
+                input3Strenght = input3Strenght * 3;
+            }
+            if(tx.inputs[3].tokenCategory.reverse() == championId2){
+                input3Life = input3Life * 3;
+            }
+        }
+        if(input2Life > input3Strenght){
+            require(tx.outputs[1].lockingBytecode == new LockingBytecodeP2PKH(owner));
+            console.log("ganador 1");
+        }else{
+            require(tx.outputs[1].lockingBytecode == tx.inputs[3].lockingBytecode);
+            console.log("ganador 2");
+        }
+        require(tx.outputs[2].lockingBytecode == new LockingBytecodeP2PKH(owner));
+        require(tx.outputs[this.activeInputIndex].nftCommitment == tx.inputs[this.activeInputIndex].nftCommitment);
+        require(tx.outputs[this.activeInputIndex].tokenAmount == tx.inputs[this.activeInputIndex].tokenAmount);
+        require(tx.outputs[this.activeInputIndex].tokenCategory == tx.inputs[this.activeInputIndex].tokenCategory);
+        require(tx.outputs[this.activeInputIndex].value == tx.inputs[this.activeInputIndex].value);
+        
+    }
+}

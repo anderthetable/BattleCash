@@ -1,0 +1,99 @@
+{
+  "contractName": "BattleCashArena",
+  "constructorInputs": [
+    {
+      "name": "owner",
+      "type": "bytes20"
+    },
+    {
+      "name": "prizeId",
+      "type": "bytes32"
+    },
+    {
+      "name": "championId1",
+      "type": "bytes32"
+    },
+    {
+      "name": "championId2",
+      "type": "bytes32"
+    }
+  ],
+  "abi": [
+    {
+      "name": "Battle",
+      "inputs": []
+    }
+  ],
+  "bytecode": "OP_2 OP_OUTPOINTTXHASH OP_3 OP_OUTPOINTTXHASH OP_CAT OP_SHA256 OP_1 OP_UTXOTOKENCATEGORY 20 OP_SPLIT OP_DROP OP_REVERSEBYTES OP_3 OP_ROLL OP_EQUALVERIFY OP_10 OP_OVER 1f OP_SPLIT OP_NIP 7f OP_AND OP_BIN2NUM OP_10 OP_MOD OP_1ADD OP_MUL OP_10 OP_2 OP_PICK 1f OP_SPLIT OP_DROP 1e OP_SPLIT OP_NIP 7f OP_AND OP_BIN2NUM OP_10 OP_MOD OP_1ADD OP_MUL OP_10 OP_3 OP_PICK 1e OP_SPLIT OP_DROP 1d OP_SPLIT OP_NIP 7f OP_AND OP_BIN2NUM OP_10 OP_MOD OP_1ADD OP_MUL OP_10 OP_4 OP_ROLL 1d OP_SPLIT OP_DROP 1c OP_SPLIT OP_NIP 7f OP_AND OP_BIN2NUM OP_10 OP_MOD OP_1ADD OP_MUL OP_2 OP_UTXOTOKENCATEGORY OP_REVERSEBYTES OP_6 OP_PICK OP_EQUAL OP_2 OP_UTXOTOKENCATEGORY OP_REVERSEBYTES OP_8 OP_PICK OP_EQUAL OP_BOOLOR OP_IF OP_3 OP_PICK OP_2 OP_MUL OP_4 OP_ROLL OP_DROP OP_SWAP OP_TOALTSTACK OP_SWAP OP_TOALTSTACK OP_SWAP OP_FROMALTSTACK OP_FROMALTSTACK OP_2 OP_PICK OP_2 OP_MUL OP_3 OP_ROLL OP_DROP OP_SWAP OP_TOALTSTACK OP_SWAP OP_FROMALTSTACK OP_2 OP_UTXOTOKENCATEGORY OP_REVERSEBYTES OP_6 OP_PICK OP_EQUAL OP_IF OP_3 OP_PICK OP_3 OP_MUL OP_4 OP_ROLL OP_DROP OP_SWAP OP_TOALTSTACK OP_SWAP OP_TOALTSTACK OP_SWAP OP_FROMALTSTACK OP_FROMALTSTACK OP_ENDIF OP_2 OP_UTXOTOKENCATEGORY OP_REVERSEBYTES OP_7 OP_PICK OP_EQUAL OP_IF OP_2 OP_PICK OP_3 OP_MUL OP_3 OP_ROLL OP_DROP OP_SWAP OP_TOALTSTACK OP_SWAP OP_FROMALTSTACK OP_ENDIF OP_ENDIF OP_3 OP_UTXOTOKENCATEGORY OP_REVERSEBYTES OP_6 OP_PICK OP_EQUAL OP_3 OP_UTXOTOKENCATEGORY OP_REVERSEBYTES OP_8 OP_PICK OP_EQUAL OP_BOOLOR OP_IF OP_OVER OP_2 OP_MUL OP_ROT OP_DROP OP_SWAP OP_DUP OP_2 OP_MUL OP_NIP OP_3 OP_UTXOTOKENCATEGORY OP_REVERSEBYTES OP_6 OP_PICK OP_EQUAL OP_IF OP_OVER OP_3 OP_MUL OP_ROT OP_DROP OP_SWAP OP_ENDIF OP_3 OP_UTXOTOKENCATEGORY OP_REVERSEBYTES OP_7 OP_PICK OP_EQUAL OP_IF OP_DUP OP_3 OP_MUL OP_NIP OP_ENDIF OP_ENDIF OP_ROT OP_ROT OP_GREATERTHAN OP_IF OP_1 OP_OUTPUTBYTECODE 76a914 OP_4 OP_PICK OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_ELSE OP_1 OP_OUTPUTBYTECODE OP_3 OP_UTXOBYTECODE OP_EQUALVERIFY OP_ENDIF OP_2 OP_OUTPUTBYTECODE 76a914 OP_4 OP_ROLL OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_INPUTINDEX OP_OUTPUTTOKENCOMMITMENT OP_INPUTINDEX OP_UTXOTOKENCOMMITMENT OP_EQUALVERIFY OP_INPUTINDEX OP_OUTPUTTOKENAMOUNT OP_INPUTINDEX OP_UTXOTOKENAMOUNT OP_NUMEQUALVERIFY OP_INPUTINDEX OP_OUTPUTTOKENCATEGORY OP_INPUTINDEX OP_UTXOTOKENCATEGORY OP_EQUALVERIFY OP_INPUTINDEX OP_OUTPUTVALUE OP_INPUTINDEX OP_UTXOVALUE OP_NUMEQUALVERIFY OP_2DROP OP_2DROP OP_1",
+  "source": "pragma cashscript ^0.12.0;\r\n\r\ncontract BattleCashArena(bytes20 owner, bytes32 prizeId, bytes32 championId1, bytes32 championId2) {\r\n    function Battle() {\r\n        bytes32 finalHash = sha256(tx.inputs[2].outpointTransactionHash + tx.inputs[3].outpointTransactionHash);\r\n        require(tx.inputs[1].tokenCategory.split(32)[0].reverse() == prizeId);\r\n        int input2Strenght = 10 * ((int(finalHash.split(31)[1] & 0x7f) %10) + 1);\r\n        console.log(input2Strenght);\r\n        int input2Life = 10 * ((int(finalHash.slice(30, 31) & 0x7f) %10) + 1);\r\n        int input3Strenght = 10 * ((int(finalHash.slice(29, 30) & 0x7f) %10) + 1);\r\n        int input3Life = 10 * ((int(finalHash.slice(28, 29) & 0x7f) %10) + 1);\r\n        if(tx.inputs[2].tokenCategory.reverse() == championId1 || tx.inputs[2].tokenCategory.reverse() == championId2){\r\n            input2Strenght = input2Strenght * 2;\r\n            input2Life = input2Life * 2;\r\n            if(tx.inputs[2].tokenCategory.reverse() == championId1){\r\n                input2Strenght = input2Strenght * 3;\r\n            }\r\n            if(tx.inputs[2].tokenCategory.reverse() == championId2){\r\n                input2Life = input2Life * 3;\r\n            }\r\n        }\r\n        if(tx.inputs[3].tokenCategory.reverse() == championId1 || tx.inputs[3].tokenCategory.reverse() == championId2){\r\n            input3Strenght = input3Strenght * 2;\r\n            input3Life = input3Life * 2;\r\n            if(tx.inputs[3].tokenCategory.reverse() == championId1){\r\n                input3Strenght = input3Strenght * 3;\r\n            }\r\n            if(tx.inputs[3].tokenCategory.reverse() == championId2){\r\n                input3Life = input3Life * 3;\r\n            }\r\n        }\r\n        if(input2Life > input3Strenght){\r\n            require(tx.outputs[1].lockingBytecode == new LockingBytecodeP2PKH(owner));\r\n            console.log(\"ganador 1\");\r\n        }else{\r\n            require(tx.outputs[1].lockingBytecode == tx.inputs[3].lockingBytecode);\r\n            console.log(\"ganador 2\");\r\n        }\r\n        require(tx.outputs[2].lockingBytecode == new LockingBytecodeP2PKH(owner));\r\n        require(tx.outputs[this.activeInputIndex].nftCommitment == tx.inputs[this.activeInputIndex].nftCommitment);\r\n        require(tx.outputs[this.activeInputIndex].tokenAmount == tx.inputs[this.activeInputIndex].tokenAmount);\r\n        require(tx.outputs[this.activeInputIndex].tokenCategory == tx.inputs[this.activeInputIndex].tokenCategory);\r\n        require(tx.outputs[this.activeInputIndex].value == tx.inputs[this.activeInputIndex].value);\r\n        \r\n    }\r\n}",
+  "debug": {
+    "bytecode": "52c853c87ea851ce01207f75bc537a885a78011f7f77017f84815a978b955a5279011f7f75011e7f77017f84815a978b955a5379011e7f75011d7f77017f84815a978b955a547a011d7f75011c7f77017f84815a978b9552cebc56798752cebc5879879b6353795295547a757c6b7c6b7c6c6c52795295537a757c6b7c6c52cebc5679876353795395547a757c6b7c6b7c6c6c6852cebc5779876352795395537a757c6b7c6c686853cebc56798753cebc5879879b637852957b757c7652957753cebc567987637853957b757c6853cebc577987637653957768687b7ba06351cd0376a91454797e0288ac7e886751cd53c7886852cd0376a914547a7e0288ac7e88c0d2c0cf88c0d3c0d09dc0d1c0ce88c0ccc0c69d6d6d51",
+    "sourceMap": "5:45:5:46;:35::71:1;:84::85:0;:74::110:1;:35;:28::111;6:26:6:27:0;:16::42:1;:49::51:0;:16::52:1;:::55;:::65;:69::76:0;;:8::78:1;7:29:7:31:0;:40::49;:56::58;:40::59:1;:::62;:65::69:0;:40:::1;:36::70;:72::74:0;:36:::1;:35::79;:29::80;9:25:9:27:0;:36::45;;:56::58;:36::59:1;;:52::54:0;:36::59:1;;:62::66:0;:36:::1;:32::67;:69::71:0;:32:::1;:31::76;:25::77;10:29:10:31:0;:40::49;;:60::62;:40::63:1;;:56::58:0;:40::63:1;;:66::70:0;:40:::1;:36::71;:73::75:0;:36:::1;:35::80;:29::81;11:25:11:27:0;:36::45;;:56::58;:36::59:1;;:52::54:0;:36::59:1;;:62::66:0;:36:::1;:32::67;:69::71:0;:32:::1;:31::76;:25::77;12:21:12:22:0;:11::37:1;:::47;:51::62:0;;:11:::1;:76::77:0;:66::92:1;:::102;:106::117:0;;:66:::1;:11;:118:21:9:0;13:29:13:43;;:46::47;:29:::1;:12::48;;;;;;;;;;14:25:14:35:0;;:38::39;:25:::1;:12::40;;;;;;;15:25:15:26:0;:15::41:1;:::51;:55::66:0;;:15:::1;:67:17:13:0;16:33:16:47;;:50::51;:33:::1;:16::52;;;;;;;;;;15:67:17:13;18:25:18:26:0;:15::41:1;:::51;:55::66:0;;:15:::1;:67:20:13:0;19:29:19:39;;:42::43;:29:::1;:16::44;;;;;;;18:67:20:13;12:118:21:9;22:21:22:22:0;:11::37:1;:::47;:51::62:0;;:11:::1;:76::77:0;:66::92:1;:::102;:106::117:0;;:66:::1;:11;:118:31:9:0;23:29:23:43;:46::47;:29:::1;:12::48;;;24:25:24:35:0;:38::39;:25:::1;:12::40;25:25:25:26:0;:15::41:1;:::51;:55::66:0;;:15:::1;:67:27:13:0;26:33:26:47;:50::51;:33:::1;:16::52;;;25:67:27:13;28:25:28:26:0;:15::41:1;:::51;:55::66:0;;:15:::1;:67:30:13:0;29:29:29:39;:42::43;:29:::1;:16::44;28:67:30:13;22:118:31:9;32:11:32:21:0;:24::38;:11:::1;:39:35:9:0;33:31:33:32;:20::49:1;:53::84:0;:78::83;;:53::84:1;;;:12::86;35:13:38:9:0;36:31:36:32;:20::49:1;:63::64:0;:53::81:1;:12::83;35:13:38:9;39:27:39:28:0;:16::45:1;:49::80:0;:74::79;;:49::80:1;;;:8::82;40:27:40:48:0;:16::63:1;:77::98:0;:67::113:1;:8::115;41:27:41:48:0;:16::61:1;:75::96:0;:65::109:1;:8::111;42:27:42:48:0;:16::63:1;:77::98:0;:67::113:1;:8::115;43:27:43:48:0;:16::55:1;:69::90:0;:59::97:1;:8::99;4:4:45:5;;",
+    "logs": [
+      {
+        "ip": 31,
+        "line": 8,
+        "data": [
+          {
+            "stackIndex": 0,
+            "type": "int",
+            "ip": 31
+          }
+        ]
+      },
+      {
+        "ip": 224,
+        "line": 34,
+        "data": [
+          "ganador 1"
+        ]
+      },
+      {
+        "ip": 230,
+        "line": 37,
+        "data": [
+          "ganador 2"
+        ]
+      }
+    ],
+    "requires": [
+      {
+        "ip": 18,
+        "line": 6
+      },
+      {
+        "ip": 223,
+        "line": 33
+      },
+      {
+        "ip": 229,
+        "line": 36
+      },
+      {
+        "ip": 239,
+        "line": 39
+      },
+      {
+        "ip": 244,
+        "line": 40
+      },
+      {
+        "ip": 249,
+        "line": 41
+      },
+      {
+        "ip": 254,
+        "line": 42
+      },
+      {
+        "ip": 259,
+        "line": 43
+      }
+    ]
+  },
+  "compiler": {
+    "name": "cashc",
+    "version": "0.12.0"
+  },
+  "updatedAt": "2025-11-13T11:17:40.280Z"
+}
