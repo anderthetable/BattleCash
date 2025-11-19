@@ -24,6 +24,9 @@ contract BattleCashManager(bytes BattleCashArenaTemplate) {
             console.log(outputIndex);
         } while(outputIndex < 3);
 
+        bytes temp = tx.outputs[0].lockingBytecode;
+        bytes temp2 = hash256(bytes1(0x20) + championId2 + bytes1(0x20) + championId1 + bytes1(0x20) + prizeId + bytes1(0x14) + owner + BattleCashArenaTemplate);
+        console.log('testing', temp, temp2);
         require(tx.outputs[0].lockingBytecode == new LockingBytecodeP2SH32(hash256(bytes1(0x20) + championId2 + bytes1(0x20) + championId1 + bytes1(0x20) + prizeId + bytes1(0x14) + owner + BattleCashArenaTemplate)));
         require(tx.outputs[0].tokenAmount == tx.inputs[0].tokenAmount);        
 

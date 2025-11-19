@@ -34,7 +34,7 @@ function calculateWinner(utxo1, utxo2, championId1, championId2, address1, addre
     return input2Life > input3Strength ? address1 : address2;
 }
 
-const BattleCashArenaBytecode = BattleCashManagerArtifact.debug.bytecode;
+const BattleCashArenaBytecode = BattleCashArenaArtifact.debug.bytecode;
 const BattleCashArenaBytecodeBin = hexToBin(BattleCashArenaBytecode) 
 
 const provider = new MockNetworkProvider()
