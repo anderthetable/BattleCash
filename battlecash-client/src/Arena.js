@@ -39,6 +39,7 @@ function Arena({ onReturn }) {
                         <div>
                             <img className='app-arena_nft' src='https://nfts.bch.guru/img/drops/2.png' />
                         </div>
+                        <input type='button' onClick={onReturn} value='Back' />
                     </div>
                 )
             }

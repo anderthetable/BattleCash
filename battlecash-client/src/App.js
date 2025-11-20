@@ -51,8 +51,8 @@ function App() {
             )
           }
           {
-            initialized && !inArena && ( 
-              <Lobby onEnterArena={onEnterArena} onLobbyExit={onLobbyExit} lobby={lobby} />
+            initialized && !inArena && (
+                <Lobby onEnterArena={onEnterArena} onLobbyExit={onLobbyExit} lobby={lobby} />
             )
           }
           {
