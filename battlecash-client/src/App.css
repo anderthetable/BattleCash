@@ -40,6 +40,7 @@
   align-content: center;
   max-height: 33%;
   min-height: 20rem;
+  width: 66vw;
   min-width: 20rem;
   /* background-color: green; */
   border-radius: 1rem;
@@ -116,6 +117,12 @@
   grid-area: footer;
   justify-items: center;
   align-content: center;
+}
+
+input {
+  background-color: inherit;
+  color: white;
+  padding: 0.5rem 1rem;
 }
 
 @keyframes horizontal-shaking {

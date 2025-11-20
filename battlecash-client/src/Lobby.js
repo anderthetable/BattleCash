@@ -3,7 +3,7 @@ import React from 'react';
 import Opponents from './Opponents';
 import MyChampions from './MyChampions';
 
-function Lobby(props) {
+function Lobby({ lobby, onEnterArena, onLobbyExit }) {
     const textEllipsisStyle = {
         whiteSpace: 'nowrap',
         overflow: 'hidden',
@@ -20,10 +20,10 @@ function Lobby(props) {
             }}
         >
             <div>
-                <input type='button' value='Back' onClick={props.onLobbyExit} />
+                <input type='button' value='Back' onClick={onLobbyExit} />
             </div>
-            <Opponents {...props} />
-            <MyChampions {...props} />
+            <Opponents lobby={lobby.arenas} onEnterArena={onEnterArena} />
+            <MyChampions lobby={lobby.myChampions} onEnterArena={onEnterArena} />
         </div>
     )
 }

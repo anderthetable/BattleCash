@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import cn from 'classnames';
 
-function Arena({ onReturn }) {
+function Arena({ onReturn, active }) {
     const [activeDamage, setActiveDamage] = useState(0);
     const [finished, setFinished] = useState(false);
     const onOpponentDamaged = e => setActiveDamage(1);
@@ -15,13 +15,13 @@ function Arena({ onReturn }) {
                 !finished && (
                     <>
                         <div className='app-arena_player app-arena_opponent'>
-                            <img className={cn('app-arena_nft', { 'app-arena_nft--damage': activeDamage === 1 })} src='https://nfts.bch.guru/img/drops/1.png' onAnimationEnd={onAnimationEnd} />
+                            <img className={cn('app-arena_nft', { 'app-arena_nft--damage': activeDamage === 1 })} src={active.opponent.imageUrl} onAnimationEnd={onAnimationEnd} />
                         </div>
                         <div className='app-arena_message'>
                             Preparing for Battle!
                         </div>
                         <div className='app-arena_player app-arena_user'>
-                            <img className='app-arena_nft' src='https://nfts.bch.guru/img/drops/2.png' />
+                            <img className='app-arena_nft' src={active.myChampion.imageUrl} />
                         </div>
                         <div style={{ display: 'grid', gridAutoFlow: 'column', columnGap: '2rem' }}>
                             <input type='button' onClick={onReturn} value='Back' />
@@ -32,14 +32,22 @@ function Arena({ onReturn }) {
             }
             {
                 finished && (
-                    <div>
+                    <div
+                        style={{
+                            display: 'grid',
+                            rowGap: '1rem',
+                            padding: '1rem',
+                        }}
+                    >
                         <div>
                             Winner!
                         </div>
                         <div>
-                            <img className='app-arena_nft' src='https://nfts.bch.guru/img/drops/2.png' />
+                            <img className='app-arena_nft' src={active.myChampion.imageUrl} />
                         </div>
-                        <input type='button' onClick={onReturn} value='Back' />
+                        <div>
+                            <input type='button' onClick={onReturn} value='Back' />
+                        </div>
                     </div>
                 )
             }

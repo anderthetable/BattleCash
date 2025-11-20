@@ -42,7 +42,7 @@ function Opponents({ onEnterArena, lobby }) {
                             <img src={u.imageUrl} style={{ width: '4rem', height: '4rem' }} />
                         </div>
                         <div style={{ justifySelf: 'center' }}>
-                            --TODO--
+                            &mdash;
                         </div>
                         <div style={{ justifySelf: 'end' }}>
                             <input type='button' value='Challenge' onClick={() => onEnterArena(u)} />
