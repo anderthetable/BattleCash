@@ -58,6 +58,18 @@ export const Network = Object.freeze({
     setInitialized(true);
   } 
 
+  useEffect(() => {
+    async function getMyChampions() {
+      if(walletConnectAddress) {
+        const utxos = await provider.getUtxos(walletConnectAddress);
+        // look for nfts
+        // set my champion in lobby
+      }
+    }
+    getMyChampions();
+    //
+  }, [walletConnectAddress]);
+
   const onEnterArena = opponent => {
     console.log('you are challenging', opponent);
     setArena(a => ({
