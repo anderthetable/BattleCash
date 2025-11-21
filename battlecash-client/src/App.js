@@ -8,6 +8,12 @@ import Arena from './Arena';
 
 import './App.css';
 
+export const Network = Object.freeze({
+  MOCKNET: "mocknet",
+  TESTNET: "bch:bchtest",
+  MAINNET: "bch:bitcoincash",
+});
+
  function App() {
   const [initialized, setInitialized] = useState(false);
   const [provider] = useState(new MockNetworkProvider());
@@ -16,16 +22,17 @@ import './App.css';
   const [walletConnectClient, setWalletConnectClient] = useState(null);
   const [walletConnectSession, setWalletConnectSession] = useState(null);
   const [walletConnectAddress, setWalletConnectAddress] = useState(null);
+  const [network, setNetwork] = useState(Network.MOCKNET);
 
   const walletConnectModalRef = useRef(null);
 
   const connectWallet = async () => {
-    if (!walletConnectClient) return;
+    if (!walletConnectClient || network === Network.MOCKNET) return;
 
     const { uri, approval } = await walletConnectClient.connect({
       requiredNamespaces: {
         "bch": {
-          "chains": ["bch:bchtest"],
+          "chains": [network],
           "methods": [
               "bch_getAddresses",
               "bch_signTransaction",
@@ -139,7 +146,7 @@ import './App.css';
       <main className='app-main'>
         {
           !initialized && (
-            <Menu startGame={() => setInitialized(true)} connectWallet={connectWallet}/>
+            <Menu startGame={() => setInitialized(true)} connectWallet={connectWallet} network={network} setNetwork={setNetwork}/>
           )
         }
         {
