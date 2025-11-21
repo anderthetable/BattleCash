@@ -1,0 +1,12 @@
+pragma cashscript ^0.13.0;
+contract BattleCashChallenger(bytes20 challenger, bytes32 BattleCashManagerBytecodeHashed) {
+    function Battle() {
+        require(tx.inputs[2].lockingBytecode == new LockingBytecodeP2SH32(BattleCashManagerBytecodeHashed));
+        require(tx.inputs[4].lockingBytecode == new LockingBytecodeP2SH32(hash256(this.activeBytecode)));
+        require(tx.outputs[2].lockingBytecode == new LockingBytecodeP2PKH(challenger));
+        require(tx.outputs[2].nftCommitment == tx.inputs[4].nftCommitment);
+        require(tx.outputs[2].tokenAmount == tx.inputs[4].tokenAmount);
+        require(tx.outputs[2].tokenCategory == tx.inputs[4].tokenCategory);
+        require(tx.outputs[2].value == tx.inputs[4].value);
+    }
+}

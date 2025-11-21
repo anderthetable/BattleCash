@@ -6,7 +6,7 @@
   "scripts": {
     "mock": "node ./index.js",
     "build": "yarn build:contracts",
-    "build:contracts": "cashc ./BattleCashManager.cash --output ./BattleCashManager.json && cashc ./BattleCashArena.cash --output ./BattleCashArena.json",
+    "build:contracts": "cashc ./BattleCashManager.cash --output ./BattleCashManager.json && cashc ./BattleCashArena.cash --output ./BattleCashArena.json && cashc ./BattleCashChallenger.cash --output ./BattleCashChallenger.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

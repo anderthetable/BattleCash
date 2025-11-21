@@ -1,0 +1,61 @@
+{
+  "contractName": "BattleCashChallenger",
+  "constructorInputs": [
+    {
+      "name": "challenger",
+      "type": "bytes20"
+    },
+    {
+      "name": "BattleCashManagerBytecodeHashed",
+      "type": "bytes32"
+    }
+  ],
+  "abi": [
+    {
+      "name": "Battle",
+      "inputs": []
+    }
+  ],
+  "bytecode": "OP_2 OP_UTXOBYTECODE aa20 OP_3 OP_ROLL OP_CAT 87 OP_CAT OP_EQUALVERIFY OP_4 OP_UTXOBYTECODE aa20 OP_ACTIVEBYTECODE OP_HASH256 OP_CAT 87 OP_CAT OP_EQUALVERIFY OP_2 OP_OUTPUTBYTECODE 76a914 OP_ROT OP_CAT 88ac OP_CAT OP_EQUALVERIFY OP_2 OP_OUTPUTTOKENCOMMITMENT OP_4 OP_UTXOTOKENCOMMITMENT OP_EQUALVERIFY OP_2 OP_OUTPUTTOKENAMOUNT OP_4 OP_UTXOTOKENAMOUNT OP_NUMEQUALVERIFY OP_2 OP_OUTPUTTOKENCATEGORY OP_4 OP_UTXOTOKENCATEGORY OP_EQUALVERIFY OP_2 OP_OUTPUTVALUE OP_4 OP_UTXOVALUE OP_NUMEQUAL",
+  "source": "pragma cashscript ^0.13.0;\r\ncontract BattleCashChallenger(bytes20 challenger, bytes32 BattleCashManagerBytecodeHashed) {\r\n    function Battle() {\r\n        require(tx.inputs[2].lockingBytecode == new LockingBytecodeP2SH32(BattleCashManagerBytecodeHashed));\r\n        require(tx.inputs[4].lockingBytecode == new LockingBytecodeP2SH32(hash256(this.activeBytecode)));\r\n        require(tx.outputs[2].lockingBytecode == new LockingBytecodeP2PKH(challenger));\r\n        require(tx.outputs[2].nftCommitment == tx.inputs[4].nftCommitment);\r\n        require(tx.outputs[2].tokenAmount == tx.inputs[4].tokenAmount);\r\n        require(tx.outputs[2].tokenCategory == tx.inputs[4].tokenCategory);\r\n        require(tx.outputs[2].value == tx.inputs[4].value);\r\n    }\r\n}",
+  "debug": {
+    "bytecode": "52c702aa20537a7e01877e8854c702aa20c1aa7e01877e8852cd0376a9147b7e0288ac7e8852d254cf8852d354d09d52d154ce8852cc54c69c",
+    "sourceMap": "4:26:4:27;:16::44:1;:48::106:0;:74::105;;:48::106:1;;;:8::108;5:26:5:27:0;:16::44:1;:48::103:0;:82::101;:74::102:1;:48::103;;;:8::105;6:27:6:28:0;:16::45:1;:49::85:0;:74::84;:49::85:1;;;:8::87;7:27:7:28:0;:16::43:1;:57::58:0;:47::73:1;:8::75;8:27:8:28:0;:16::41:1;:55::56:0;:45::69:1;:8::71;9:27:9:28:0;:16::43:1;:57::58:0;:47::73:1;:8::75;10:27:10:28:0;:16::35:1;:49::50:0;:39::57:1;:8::59",
+    "logs": [],
+    "requires": [
+      {
+        "ip": 10,
+        "line": 4
+      },
+      {
+        "ip": 19,
+        "line": 5
+      },
+      {
+        "ip": 27,
+        "line": 6
+      },
+      {
+        "ip": 32,
+        "line": 7
+      },
+      {
+        "ip": 37,
+        "line": 8
+      },
+      {
+        "ip": 42,
+        "line": 9
+      },
+      {
+        "ip": 48,
+        "line": 10
+      }
+    ]
+  },
+  "compiler": {
+    "name": "cashc",
+    "version": "0.13.0-next.1"
+  },
+  "updatedAt": "2025-11-21T00:28:37.214Z"
+}
