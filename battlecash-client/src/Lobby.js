@@ -3,7 +3,7 @@ import React from 'react';
 import Opponents from './Opponents';
 import MyChampions from './MyChampions';
 
-function Lobby({ lobby, onEnterArena, onLobbyExit }) {
+function Lobby({ lobby, onEnterArena, onLobbyExit, walletConnectAddress }) {
     const textEllipsisStyle = {
         whiteSpace: 'nowrap',
         overflow: 'hidden',
@@ -21,6 +21,7 @@ function Lobby({ lobby, onEnterArena, onLobbyExit }) {
         >
             <div>
                 <input type='button' value='Back' onClick={onLobbyExit} />
+                <p>Wallet: {walletConnectAddress ? walletConnectAddress : "Not connected"}</p>
             </div>
             <Opponents lobby={lobby.arenas} onEnterArena={onEnterArena} />
             <MyChampions lobby={lobby.myChampions} onEnterArena={onEnterArena} />

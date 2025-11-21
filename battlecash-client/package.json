@@ -7,6 +7,8 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^13.2.1",
+    "@walletconnect/modal": "2.7.0",
+    "@walletconnect/sign-client": "2.18.1",
     "cashc": "0.13.0-next.1",
     "cashscript": "0.13.0-next.1",
     "classnames": "^2.5.1",

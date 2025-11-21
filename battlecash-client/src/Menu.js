@@ -1,4 +1,4 @@
-function Menu({ startGame }) {
+function Menu({ startGame, connectWallet }) {
   return (
     <div className='app-menu'>
       <div>
@@ -10,7 +10,7 @@ function Menu({ startGame }) {
         </select>
       </div>
       <div>
-        -- TODO: Wallet Connect --
+        <input className='app-menu__start' type='button' onClick={connectWallet} value='Wallet Connect' />
       </div>
       <input className='app-menu__start' type='button' onClick={startGame} value='Start' />
     </div>
